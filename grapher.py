@@ -28,7 +28,6 @@ elif mode == "p":
     a = float(input("f(x) = ax^2 + bx + c , set the value of a: "))
     b = float(input("f(x) = ax^2 + bx + c , set the value of b: "))
     c = float(input("f(x) = ax^2 + bx + c , set the value of c: "))
-        
 class Dot(Sprite):
     
     asset = CircleAsset(2, thinline, pink)
@@ -54,6 +53,8 @@ class Dot(Sprite):
                 self.x = -100*(-b+math.sqrt(b**2-4*a*c+23.2*a))/(2*a)
         self.loop = False
         self.visible = False
+        else:
+            self.x = 0
         
     
     def l(self):
@@ -64,6 +65,32 @@ class Dot(Sprite):
         
     def p(self):
         return a*100*(self.x/100)**2+b*self.x+100*c
+    
+    def jeff(self):
+        i = 2
+        multiples_ = [1]
+        while i <= self.x:
+            if self.x % i == 0:
+                multiples_.append(i)
+                self.x = self.x / i
+            else:
+                i += 1
+        return sum(multiples_)
+        
+    def jeff1(self):
+        i = 2
+        multiples_ = [1]
+        while i <= self.x+1:
+            if (self.x+1) % i == 0:
+                multiples_.append(i)
+                (self.x+1) = (self.x+1) / i
+            else:
+                i += 1
+        return sum(multiples_)
+           
+    
+    
+    
         
     def step(self):
         if 10 == 10:
@@ -134,6 +161,26 @@ class Dot(Sprite):
                 else:
                     self.loop = False
                     print("loop finished")
+            else:
+                n = self.jeff1() - self.jeff()
+                if not self.loop:
+                    self.y = self.jeff()
+                    sprite = Sprite(Dot.asset, (self.x, -self.y+500))
+                
+                if n > 1:
+                    self.y -= 1
+                    sprite1 = Sprite(Dot.asset, (self.x, -self.y+500))
+                    self.loop = True
+                    n -= 1
+                    
+                elif n < -1:
+                    self.y += 1
+                    sprite1 = Sprite(Dot.asset, (self.x, -self.y+500))
+                    self.loop = True
+                    n += 1
+                    
+                else:
+                    self.loop = False
         if not self.loop:
             self.x += 1    
             
